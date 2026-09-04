@@ -1,3 +1,4 @@
+```python
 import streamlit as st
 import pandas as pd
 import plotly.express as px
@@ -27,6 +28,7 @@ DIFY_API_KEY = os.getenv("DIFY_API_KEY")
 
 # =========================================================
 # LEFT SIDEBAR - USER INPUT
+# EXACT SAME DIFY VARIABLE NAMES
 # =========================================================
 
 with st.sidebar:
@@ -118,7 +120,7 @@ if generate_report:
 
 
     # =====================================================
-    # DIFY INPUT VARIABLES
+    # EXACT DIFY VARIABLE NAMES
     # =====================================================
 
     payload = {
@@ -175,7 +177,9 @@ if generate_report:
 
         )
 
+
         response.raise_for_status()
+
 
         dify_result = response.json()
 
@@ -258,7 +262,6 @@ total_expenses = (
 remaining_balance = (
 
     monthly_income
-
     - total_expenses
 
 )
@@ -314,11 +317,11 @@ annual_savings = savings_amount * 12
 # FINANCIAL STATUS
 # =========================================================
 
-if savings_percentage >= 20:
+if savings_percentage >= 50:
 
     financial_status = "Healthy"
 
-elif savings_percentage >= 10:
+elif savings_percentage >= 20:
 
     financial_status = "Moderate"
 
@@ -447,13 +450,7 @@ if allocation_data["Amount"].sum() > 0:
 
     fig_allocation.update_traces(
 
-        textinfo="label+percent",
-
-        textposition="inside",
-
-        texttemplate="<b>%{label}</b><br>%{percent:.1%}",
-
-        insidetextorientation="horizontal"
+        textinfo="label+percent"
 
     )
 
@@ -575,8 +572,8 @@ with col1:
 
 
         # =================================================
-        # IMPORTANT:
-        # SHOW CATEGORY NAME + PERCENTAGE INSIDE EACH SLICE
+        # PIE CHART LABEL FIX
+        # CATEGORY + PERCENTAGE INSIDE EACH SLICE
         # =================================================
 
         fig_pie.update_traces(
@@ -592,10 +589,15 @@ with col1:
             textfont_size=11,
 
             hovertemplate=(
+
                 "<b>%{label}</b>"
+
                 "<br>Amount: ₹%{value:,.0f}"
+
                 "<br>Share: %{percent:.1%}"
+
                 "<extra></extra>"
+
             )
 
         )
@@ -608,10 +610,15 @@ with col1:
             uniformtext_mode="show",
 
             margin=dict(
+
                 t=20,
+
                 b=20,
+
                 l=20,
+
                 r=20
+
             )
 
         )
@@ -963,7 +970,7 @@ if monthly_income > 0:
 
         f"📅 If you maintain your current savings, "
         f"you could save approximately "
-        f"**₹{annual_savings:,.0f} in a year.**"
+        f"**₹{annual_savings:,.0f} in a year**."
 
     )
 
@@ -997,8 +1004,11 @@ if len(ranking_data) > 0:
         "Rank",
 
         range(
+
             1,
+
             len(ranking_data) + 1
+
         )
 
     )
@@ -1099,6 +1109,8 @@ st.subheader(
     "🎯 Savings Goal"
 )
 
+
+# Suggested goal based on income
 
 if monthly_income > 0:
 
@@ -1391,3 +1403,4 @@ st.divider()
 st.caption(
     "💰 SmartSave AI | Personal Finance & Savings Optimization Dashboard"
 )
+```
